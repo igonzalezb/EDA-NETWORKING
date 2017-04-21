@@ -1,5 +1,4 @@
-> <span id="page1" class="anchor"></span>ALGORITMOS Y ESTRUCTURAS DE
-> DATOS
+<span id="page1" class="anchor"></span>**ALGORITMOS Y ESTRUCTURAS DE DATOS**
 
 **Guía 6. Introducción a Networking**
 
