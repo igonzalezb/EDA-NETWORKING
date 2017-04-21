@@ -1,4 +1,11 @@
 #pragma once
+/*
+
+Created by Pedro Dans 27/Mar/2017
+Reviewed by Agustin Perez Moreno 11/04/2017
+
+*/
+
 
 #include <iostream>
 #include <boost/asio.hpp>
@@ -7,7 +14,7 @@
 #include "Connection.h"
 
 #define HELLO_PORT_STR "12345"
-#define SERVER_IP "localhost"
+#define SERVER_IP "25.65.241.42"
 
 class client {
 public:

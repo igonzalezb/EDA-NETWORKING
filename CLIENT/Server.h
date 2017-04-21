@@ -1,13 +1,5 @@
 #pragma once
 
-/*
-
-Created by Pedro Dans 27/Mar/2017
-Reviewed by Agustin Perez Moreno 11/04/2017
-
-*/
-
-
 #include <iostream>
 #include <exception>
 #include <array>
@@ -25,8 +17,12 @@ public:
 	server();
 	void startConnection();
 	void sendMessage();
+	void receiveMessage();
 	void writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes);
 
+	void setServerAcceptor(boost::asio::ip::tcp::acceptor*);
+	boost::asio::io_service* getIO_handler();
+	boost::asio::ip::tcp::acceptor* getServerAcceptor();
 private:
 	boost::asio::io_service*  IO_handler;
 	boost::asio::ip::tcp::socket* socket_forServer;

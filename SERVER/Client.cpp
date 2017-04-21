@@ -8,10 +8,22 @@ client::client() {
 
 void client::startConnection(const char* host) {
 	
-		endpoint = client_resolver->resolve(boost::asio::ip::tcp::resolver::query(host, HELLO_PORT_STR));
-		boost::asio::connect(*socket_forClient, endpoint);
+	bool exit;
 
+	endpoint = client_resolver->resolve(boost::asio::ip::tcp::resolver::query(host, HELLO_PORT_STR));
 	
+	do {
+		exit = true;
+		try {
+			boost::asio::connect(*socket_forClient, endpoint);
+		}
+		catch (const std::exception& e)
+		{
+			std::cout << "Waiting for server" << std::endl;
+			exit = false;
+		}
+	} while (!exit);
+
 }
 
 void client::receiveMessage() {
@@ -27,16 +39,21 @@ void client::receiveMessage() {
 		{
 			std::cout << '|';
 			buf[len] = '\0';
+			std::cout << "Receiving" << std::endl; //para debug
+			//break;
 		}
+		//if (buf[len] == '\0')
+			//break;
 
-	} while (!error);
+	} while (error); // cambie !error por error. 
+
+	//std::cout << "Receiving" << std::endl;
 
 	if (error != boost::asio::error::eof)
-		std::cout << std::endl << "Client says: " << buf << std::endl;
+		std::cout << std::endl << "Server says: " << buf << std::endl;
 	else
 		std::cout << "Error while trying to connect to server %d" << error.message() << std::endl;
 }
-
 
 void client::writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes) {
 	std::cout << std::endl << "Write Callback called" << std::endl;
@@ -44,6 +61,7 @@ void client::writeCompletitionCallback(const boost::system::error_code& error, s
 
 void client::sendMessage()
 {
+	std::cout << std::endl << "Sending " << std::endl; //Para debug
 	char message[] = "Hello from client.";
 
 	boost::function<void(const boost::system::error_code&, std::size_t)> handler(
