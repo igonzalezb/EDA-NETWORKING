@@ -10,18 +10,18 @@ máquina y luego la continúe en otra, de forma que la animación vaya
 saltando de máquina en máquina hasta que se haya mostrado en todas
 ellas.
 
-> Detalles de implementación:
+ Detalles de implementación:
 
 1.  La aplicación se ejecuta en todas las máquinas involucradas.
 
 2.  En la carpeta en donde se encuentra la aplicación contamos también
-    > con un segundo archivo llamado direcciones.txt que contiene la
-    > dirección IP de cada máquina involucrada. Una dirección IP por
-    > línea (las líneas terminan con ‘\\n’). El archivo debe ser
-    > idéntico para todas las máquinas
+    con un segundo archivo llamado direcciones.txt que contiene la
+    dirección IP de cada máquina involucrada. Una dirección IP por
+    línea (las líneas terminan con ‘\\n’). El archivo debe ser
+    idéntico para todas las máquinas
 
-> Ej: del contenido del archivo direcciones.txt con tres direcciones IP:
->
+Ej: del contenido del archivo direcciones.txt con tres direcciones IP:
+
 > 19.192.168.15
 >
 > 19.192.168.16
@@ -33,11 +33,11 @@ ellas.
 2.  Como mínimo admitiremos 2 máquinas.
 
 3.  Enumeraremos las direcciones IP del archivo direcciones.txt de forma
-    > que la primera dirección corresponde al 1, la segunda al 2 y
-    > así sucesivamente.
+    que la primera dirección corresponde al 1, la segunda al 2 y
+    así sucesivamente.
 
 4.  Dispondremos de 6 posibles animaciones y las llamaremos con letras
-    > mayúsculas según la siguiente correspondencia:
+    mayúsculas según la siguiente correspondencia:
 
     1.  Cat Running
 
@@ -52,14 +52,14 @@ ellas.
     6.  Sonic
 
 5.  Al iniciar la aplicación esta le permitirá al usuario elegir entre 6
-    > animaciones a mostrar entre todas las máquinas y la secuencia en
-    > que desea mostrarlas en las distintas máquinas
+    animaciones a mostrar entre todas las máquinas y la secuencia en
+    que desea mostrarlas en las distintas máquinas
 
 6.  El usuario por lo tanto elegirá una animación y una secuencia de
-    > repetición, por ejemplo, el usuario de la máquina 3 elije la
-    > animación C y la secuencia 1, 3, 2. Esto quiere decir que la
-    > secuencia se mostrará primero en la máquina 1 luego en la máquina
-    > 3 y finalmente en la máquina 2.
+    repetición, por ejemplo, el usuario de la máquina 3 elije la
+    animación C y la secuencia 1, 3, 2. Esto quiere decir que la
+    secuencia se mostrará primero en la máquina 1 luego en la máquina
+    3 y finalmente en la máquina 2.
 
 | <span id="page2" class="anchor"></span>9. |                                                                              | Cuando le usuario le indica a su máquina que quiere iniciar una secuencia,       |
 |-------------------------------------------|------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
