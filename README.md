@@ -31,15 +31,15 @@ saltando de máquina en máquina hasta que se haya mostrado en todas ellas.
 6.  Dispondremos de 6 posibles animaciones y las llamaremos con letras mayúsculas según la siguiente correspondencia:
 
     > 1.  Cat Running
-
+    >
     > 2.  Explosion 1
-
+    >
     > 3.  Explosion 2
-
+    >
     > 4.  Homer Dance
-
+    >
     > 5.  Super Mario
-
+    >
     > 6.  Sonic
 
 7.  Al iniciar la aplicación esta le permitirá al usuario elegir entre 6 animaciones a mostrar entre todas las máquinas y la secuencia en que desea mostrarlas en las distintas máquinas
