@@ -15,11 +15,11 @@ saltando de máquina en máquina hasta que se haya mostrado en todas ellas.
 
  Ej: del contenido del archivo direcciones.txt con tres direcciones IP:
 
-> 19.192.168.15
+> 192.168.0.15
 >
-> 19.192.168.16
+> 192.168.0.16
 >
-> 19.192.168.125
+> 192.168.0.125
 
 3.  Como máximo admitiremos 255 máquinas.
 
