@@ -7,7 +7,7 @@ walkingAnimation::walkingAnimation()
 
 walkingAnimation::walkingAnimation(char _id)
 {
-	id = _id - 'a';
+	id = _id - 'a';			//Convierto el char a un int
 	currentFrame = 0;
 	explosion = false;
 	intro = false;

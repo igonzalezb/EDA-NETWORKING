@@ -13,11 +13,13 @@
 #include "animation.h"
 #include "Position.h"
 
+//WINDOW INFO
 #define SCREEN_W		1200
 #define SCREEN_H		700
 #define FPS			50.0
 #define ANIMATION_SIZE		400
 
+//INFO FOR EXPLOSION2
 #define LOAD_TIMER		10
 #define LOAD_X1			al_get_display_width(display)/6
 #define LOAD_X2			al_get_display_width(display)/1.2
