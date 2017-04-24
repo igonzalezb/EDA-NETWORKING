@@ -94,5 +94,5 @@ animation::~animation()
 	al_stop_samples();
 	al_destroy_sample(sample);
 
-	delete aniFrames;		//Elimino el arreglo dinamico de bitmaps
+	delete aniFrames[];		//Elimino el arreglo dinamico de bitmaps
 }
