@@ -1,5 +1,4 @@
-> <span id="page1" class="anchor"></span>ALGORITMOS Y ESTRUCTURAS DE
-> DATOS
+<span id="page1" class="anchor"></span>**ALGORITMOS Y ESTRUCTURAS DE DATOS**
 
 **Guía 6. Introducción a Networking**
 
@@ -16,11 +15,11 @@ saltando de máquina en máquina hasta que se haya mostrado en todas ellas.
 
  Ej: del contenido del archivo direcciones.txt con tres direcciones IP:
 
-> 19.192.168.15
+> 192.168.0.15
 >
-> 19.192.168.16
+> 192.168.0.16
 >
-> 19.192.168.125
+> 192.168.0.125
 
 3.  Como máximo admitiremos 255 máquinas.
 
@@ -32,15 +31,15 @@ saltando de máquina en máquina hasta que se haya mostrado en todas ellas.
 6.  Dispondremos de 6 posibles animaciones y las llamaremos con letras mayúsculas según la siguiente correspondencia:
 
     > 1.  Cat Running
-
+    >
     > 2.  Explosion 1
-
+    >
     > 3.  Explosion 2
-
+    >
     > 4.  Homer Dance
-
+    >
     > 5.  Super Mario
-
+    >
     > 6.  Sonic
 
 7.  Al iniciar la aplicación esta le permitirá al usuario elegir entre 6 animaciones a mostrar entre todas las máquinas y la secuencia en que desea mostrarlas en las distintas máquinas
