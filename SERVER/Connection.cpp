@@ -1,11 +1,6 @@
-
-
-
 #include "Connection.h"
 #include "Client.h"
 #include "Server.h"
-
-//#include <Windows.h>
 
 using namespace std;
 
@@ -38,17 +33,19 @@ int main(int argc, char* argv[])
 
 void TCPserver()
 {
+	unsigned int i = 0;
 	server conquering;
 
-	conquering.setServerAcceptor(new boost::asio::ip::tcp::acceptor(*conquering.getIO_handler(),
-				boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), HELLO_PORT))); // cambio tcp::v4() por address::from_string("127.0.0.1")
+	conquering.setServerAcceptor(new boost::asio::ip::tcp::acceptor(*conquering.getIO_handler(i),
+				boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), HELLO_PORT)), i); // cambio tcp::v4() por address::from_string("127.0.0.1")
 	
 
 	std::cout << std::endl << "Start Listening on port " << HELLO_PORT << std::endl;
-	conquering.startConnection();
+	
+	conquering.startConnection(i);
 	std::cout << "Somebody connected to port " << HELLO_PORT << std::endl;
-	conquering.sendMessage();
-	conquering.receiveMessage();
+	conquering.sendMessage(i);
+	conquering.receiveMessage(i);
 }
 
 void asioTcpClient(const char* host)

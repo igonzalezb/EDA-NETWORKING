@@ -15,17 +15,22 @@
 class server {
 public:
 	server();
-	void startConnection();
-	void sendMessage();
-	void receiveMessage();
+	void startConnection(unsigned int i);
+	void sendMessage(unsigned int i);
+	void receiveMessage(unsigned int i);
 	void writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes);
 
-	void setServerAcceptor(boost::asio::ip::tcp::acceptor*);
-	boost::asio::io_service* getIO_handler();
-	boost::asio::ip::tcp::acceptor* getServerAcceptor();
+	void setServerAcceptor(boost::asio::ip::tcp::acceptor*, unsigned int i);
+	boost::asio::io_service* getIO_handler(unsigned int i);
+
+	boost::asio::ip::tcp::acceptor* getServerAcceptor(unsigned int i);
+
+	boost::asio::ip::tcp::socket* socket_forServer[254];
+
+
 private:
-	boost::asio::io_service*  IO_handler;
-	boost::asio::ip::tcp::socket* socket_forServer;
-	boost::asio::ip::tcp::acceptor* server_acceptor;
+	boost::asio::io_service*  IO_handler[255];
+	//boost::asio::ip::tcp::socket* socket_forServer;
+	boost::asio::ip::tcp::acceptor* server_acceptor[254];
 };
 

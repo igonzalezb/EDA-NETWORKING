@@ -1,10 +1,4 @@
 #pragma once
-/*
-
-Created by Pedro Dans 27/Mar/2017
-Reviewed by Agustin Perez Moreno 11/04/2017
-
-*/
 
 
 #include <iostream>
@@ -23,10 +17,14 @@ public:
 	void receiveMessage();
 	void sendMessage();
 	void writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes);
+	byte_t* youGo;
+	void userYouGo(char *animacion_y_orden_de_maquina);
 
 private:
 	boost::asio::io_service* IO_handler;
 	boost::asio::ip::tcp::socket* socket_forClient;
 	boost::asio::ip::tcp::resolver* client_resolver;
 	boost::asio::ip::tcp::resolver::iterator endpoint;
+
+	
 };

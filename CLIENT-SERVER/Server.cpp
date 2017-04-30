@@ -6,12 +6,12 @@ void server::writeCompletitionCallback(const boost::system::error_code& error, s
 	std::cout << std::endl << "Write Callback called" << std::endl;
 }
 
-void server::startConnection(unsigned int i) 
+void server::startConnection()
 {
-	server_acceptor[i]->accept(*socket_forServer[i]);
+	server_acceptor->accept(*socket_forServer);
 }
 
-void server::sendMessage(unsigned int i) 
+void server::sendMessage()
 {
 	char message[] = "Hello from server.";
 	std::cout << "Sending" << std::endl; //para debug
@@ -20,25 +20,20 @@ void server::sendMessage(unsigned int i)
 			boost::asio::placeholders::error,
 			boost::asio::placeholders::bytes_transferred));
 	//std::cout << "sending1" << std::endl; //para debug
-	boost::asio::async_write(*socket_forServer[i], boost::asio::buffer(message), handler);
+	boost::asio::async_write(*socket_forServer, boost::asio::buffer(message), handler);
 	//std::cout << "sending2" << std::endl; //para debug
 }
 
-server::server() 
+server::server()
 {
-	
-	for (unsigned int j = 0; j < 255; j++)
-	{
-		IO_handler[j] = new boost::asio::io_service();
-		socket_forServer[j] = new boost::asio::ip::tcp::socket(*IO_handler[j]);
-	}
-	
+	IO_handler = new boost::asio::io_service();
+	socket_forServer = new boost::asio::ip::tcp::socket(*IO_handler);
 	//server_acceptor = new boost::asio::ip::tcp::acceptor(*IO_handler,
 	//	boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), HELLO_PORT));
 	std::cout << std::endl << "Ready. Port " << HELLO_PORT << " created" << std::endl;
 }
 
-void server::receiveMessage(unsigned int i) 
+void server::receiveMessage()
 {
 	boost::system::error_code error;
 	char buf[512];
@@ -46,7 +41,7 @@ void server::receiveMessage(unsigned int i)
 	std::cout << "Receiving Message" << std::endl;
 	do
 	{
-		len = socket_forServer[i]->read_some(boost::asio::buffer(buf), error);
+		len = socket_forServer->read_some(boost::asio::buffer(buf), error);
 
 		if (!error)
 		{
@@ -57,25 +52,36 @@ void server::receiveMessage(unsigned int i)
 	} while (error); //CAMBIE !ERROR POR ERROR
 
 	if (error != boost::asio::error::eof)
-		std::cout << std::endl << "Client says: " << buf << std::endl;
+	{
+		walkingAnimation character(buf[0]); //MANDARLE EL ELEMENTO 0 DE buf. buf ACA ES LO MISMO QUE youGo. tiene la letra de la animacion
+		character.startAnimation();
+
+		buf[COUNT]++; // incremento contador. 
+
+			      //////ACA AVERIGUAR EL VALOR DE countMax)  VER COMO HACERLO
+		std::string str(buf); //bien?
+		unsigned int countMax = str.length() - 2;
+		////////////
+
+		if (buf[COUNT] >= countMax)
+		{
+			buf = userYouGo(); // va a esperar a que  se ingrese todo por teclado. Ya hace como un setter, tiene acceso a youGo.
+					   //GUARDAR BUF EN youGo
+		}
+	}
 	else
 		std::cout << "Error while trying to connect to server %d" << error.message() << std::endl;
 }
 
 
 /////////////// setter de server_acceptor
-void server::setServerAcceptor(boost::asio::ip::tcp::acceptor* newAcceptor, unsigned int i)
+void server::setServerAcceptor(boost::asio::ip::tcp::acceptor* newAcceptor)
 {
-	server_acceptor[i] = newAcceptor;
-}
-
-boost::asio::ip::tcp::acceptor* server::getServerAcceptor(unsigned int i)
-{
-	return server_acceptor[i];
+	server_acceptor = newAcceptor;
 }
 
 /////////////// getter de IO_handler
-boost::asio::io_service* server::getIO_handler(unsigned int i)
+boost::asio::io_service* server::getIO_handler()
 {
-	return IO_handler[i];
+	return IO_handler;
 }
