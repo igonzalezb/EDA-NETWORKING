@@ -66,7 +66,7 @@ void asioTcpClient()
 	for (unsigned int i = SECUENCIA; i < SECUENCIA+countMax; i++)
 	{
 		unsigned int computerNumber = (unsigned int)conquering.youGo[i]; //ver este casteo y declarar youGo.
-		conquering.startConnection(ip[computerNumber][0]); //ver si se pone host. Hay que pasarle el IP. ver si pasar como puntero o que
+		conquering.startConnection(&ip[computerNumber][0]); //ver si se pone host. Hay que pasarle el IP. ver si pasar como puntero o que
 		conquering.sendMessage(); //MANDA el youGo con la info
 		conquering.receiveMessage(); //RECIBE el nuevo youGo
 	}
@@ -74,7 +74,7 @@ void asioTcpClient()
 
 
 
-///////////////////////////////////// callback ///////////////////////////////////////
+///////////////////////////////////// callback /////////////////////////////////////////////////////////////
 // si la persona pone "iniciar" en linea de comandos, es el CLIENTE, EL QUE DIRIGE TODO!!
 
 bool callback(char argc, char**argv)
@@ -86,7 +86,7 @@ bool callback(char argc, char**argv)
 	return SERVER;
 }
 
-/////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

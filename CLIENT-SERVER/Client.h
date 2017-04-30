@@ -17,7 +17,7 @@ public:
 	void receiveMessage();
 	void sendMessage();
 	void writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes);
-	byte_t* youGo;
+	byte_t *youGo;
 	void userYouGo(char *animacion_y_orden_de_maquina);
 
 private:
