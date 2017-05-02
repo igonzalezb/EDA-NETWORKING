@@ -1,15 +1,28 @@
+
 #pragma once
 
-//#include "Client.h"
-//#include "Server.h"
+#include <iostream>
+#include <string>
 
-typedef char byte_t;
+#include <fstream>
 
-enum youGoElements {ANIMATION, COUNT};
+#include "Client.h"
+#include "Server.h"
+
+//typedef char byte_t;
+
+enum youGoElements { ANIMATION, COUNT, SECUENCIA };
 
 bool callback(char argc, char**argv);
 
 void TCPserver();
-void asioTcpClient(const char* host);
+void asioTcpClient();//(const char* host);
 
-//byte_t* userYouGo(void);
+
+int cuantas_pc_tengo(void);
+void tomo_ips(char*ip, int x);
+
+
+void userYouGo(char*);
+unsigned int setCountMax(char*youGo);
+

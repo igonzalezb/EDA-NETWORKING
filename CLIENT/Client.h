@@ -1,17 +1,12 @@
 #pragma once
-/*
-
-Created by Pedro Dans 27/Mar/2017
-Reviewed by Agustin Perez Moreno 11/04/2017
-
-*/
-
 
 #include <iostream>
 #include <boost/asio.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include "Connection.h"
+
+
 
 #define HELLO_PORT_STR "12345"
 #define SERVER_IP "localhost"
@@ -23,6 +18,8 @@ public:
 	void receiveMessage();
 	void sendMessage();
 	void writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes);
+	char youGo[257];
+	//void userYouGo(char *animacion_y_orden_de_maquina);
 
 private:
 	boost::asio::io_service* IO_handler;

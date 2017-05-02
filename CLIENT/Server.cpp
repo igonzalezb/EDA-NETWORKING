@@ -1,17 +1,17 @@
 #include "Server.h"
-
+#include <conio.h>
 
 
 void server::writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes) {
 	std::cout << std::endl << "Write Callback called" << std::endl;
 }
 
-void server::startConnection() 
+void server::startConnection()
 {
 	server_acceptor->accept(*socket_forServer);
 }
 
-void server::sendMessage() 
+void server::sendMessage()
 {
 	char message[] = "Hello from server.";
 	std::cout << "Sending" << std::endl; //para debug
@@ -24,7 +24,7 @@ void server::sendMessage()
 	//std::cout << "sending2" << std::endl; //para debug
 }
 
-server::server() 
+server::server()
 {
 	IO_handler = new boost::asio::io_service();
 	socket_forServer = new boost::asio::ip::tcp::socket(*IO_handler);
@@ -33,7 +33,7 @@ server::server()
 	std::cout << std::endl << "Ready. Port " << HELLO_PORT << " created" << std::endl;
 }
 
-void server::receiveMessage() 
+void server::receiveMessage()
 {
 	boost::system::error_code error;
 	char buf[512];
@@ -52,7 +52,23 @@ void server::receiveMessage()
 	} while (error); //CAMBIE !ERROR POR ERROR
 
 	if (error != boost::asio::error::eof)
-		std::cout << std::endl << "Client says: " << buf << std::endl;
+	{
+		//		walkingAnimation character(buf[0]); //MANDARLE EL ELEMENTO 0 DE buf. buf ACA ES LO MISMO QUE youGo. tiene la letra de la animacion
+		//		character.startAnimation();
+
+		buf[COUNT]++; // incremento contador. 
+
+					  //////ACA AVERIGUAR EL VALOR DE countMax)  VER COMO HACERLO
+		std::string str(buf); //bien?
+		unsigned int countMax = str.length() - 2;
+		////////////
+
+		if (buf[COUNT] >= countMax)
+		{
+			userYouGo(buf); // va a esperar a que  se ingrese todo por teclado. Ya hace como un setter, tiene acceso a youGo.
+							//GUARDAR BUF EN youGo
+		}
+	}
 	else
 		std::cout << "Error while trying to connect to server %d" << error.message() << std::endl;
 }
@@ -62,11 +78,6 @@ void server::receiveMessage()
 void server::setServerAcceptor(boost::asio::ip::tcp::acceptor* newAcceptor)
 {
 	server_acceptor = newAcceptor;
-}
-
-boost::asio::ip::tcp::acceptor* server::getServerAcceptor()
-{
-	return server_acceptor;
 }
 
 /////////////// getter de IO_handler

@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <iostream>
 #include <exception>
 #include <array>
@@ -7,6 +8,7 @@
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include "Connection.h"
+
 
 //#include <Windows.h>
 
@@ -21,11 +23,12 @@ public:
 	void writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes);
 
 	void setServerAcceptor(boost::asio::ip::tcp::acceptor*);
-	boost::asio::io_service* getIO_handler();
+	boost::asio::io_service *getIO_handler();
+	char youGo[257];
 
 private:
-	boost::asio::io_service*  IO_handler;
-	boost::asio::ip::tcp::socket* socket_forServer;
-	boost::asio::ip::tcp::acceptor* server_acceptor;
+	boost::asio::io_service *IO_handler;
+	boost::asio::ip::tcp::socket *socket_forServer;
+	boost::asio::ip::tcp::acceptor *server_acceptor;
 };
 

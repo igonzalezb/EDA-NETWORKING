@@ -1,11 +1,4 @@
 #pragma once
-/*
-
-Created by Pedro Dans 27/Mar/2017
-Reviewed by Agustin Perez Moreno 11/04/2017
-
-*/
-
 
 #include <iostream>
 #include <boost/asio.hpp>
@@ -13,8 +6,10 @@ Reviewed by Agustin Perez Moreno 11/04/2017
 #include <boost/bind.hpp>
 #include "Connection.h"
 
+
+
 #define HELLO_PORT_STR "12345"
-#define SERVER_IP "25.65.241.42"
+#define SERVER_IP "localhost"
 
 class client {
 public:
@@ -23,6 +18,8 @@ public:
 	void receiveMessage();
 	void sendMessage();
 	void writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes);
+	char youGo[257];
+	//void userYouGo(char *animacion_y_orden_de_maquina);
 
 private:
 	boost::asio::io_service* IO_handler;

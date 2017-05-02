@@ -1,5 +1,5 @@
 #include "Server.h"
-
+#include <conio.h>
 
 
 void server::writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes) {
@@ -53,20 +53,20 @@ void server::receiveMessage()
 
 	if (error != boost::asio::error::eof)
 	{
-		//walkingAnimation character(buf[0]); //MANDARLE EL ELEMENTO 0 DE buf. buf ACA ES LO MISMO QUE youGo. tiene la letra de la animacion
-		//character.startAnimation();
+		//		walkingAnimation character(buf[0]); //MANDARLE EL ELEMENTO 0 DE buf. buf ACA ES LO MISMO QUE youGo. tiene la letra de la animacion
+		//		character.startAnimation();
 
 		buf[COUNT]++; // incremento contador. 
 
-			      //////ACA AVERIGUAR EL VALOR DE countMax)  VER COMO HACERLO
+					  //////ACA AVERIGUAR EL VALOR DE countMax)  VER COMO HACERLO
 		std::string str(buf); //bien?
 		unsigned int countMax = str.length() - 2;
 		////////////
 
 		if (buf[COUNT] >= countMax)
 		{
-			buf = userYouGo(); // va a esperar a que  se ingrese todo por teclado. Ya hace como un setter, tiene acceso a youGo.
-					   //GUARDAR BUF EN youGo
+			userYouGo(buf); // va a esperar a que  se ingrese todo por teclado. Ya hace como un setter, tiene acceso a youGo.
+							//GUARDAR BUF EN youGo
 		}
 	}
 	else
