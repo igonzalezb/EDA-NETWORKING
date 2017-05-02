@@ -30,10 +30,10 @@ void walkingAnimation::startAnimation()
 {
 	bool do_exit = false, redraw = true;
 
-	al_draw_scaled_bitmap(character.getScenario(), 0.0, 0.0, al_get_bitmap_width(character.getScenario()), al_get_bitmap_height(character.getScenario()), 0.0, 0.0, al_get_display_width(display), al_get_display_height(display), NULL);				//Dibujamos el fondo
+	al_draw_scaled_bitmap(character->getScenario(), 0.0, 0.0, al_get_bitmap_width(character->getScenario()), al_get_bitmap_height(character->getScenario()), 0.0, 0.0, al_get_display_width(display), al_get_display_height(display), NULL);				//Dibujamos el fondo
 	al_flip_display();
 	
-	al_set_timer_speed(timer, 10.0 / character.getPeriod());	//Cambio el periodo segun el objeto en el que estoy
+	al_set_timer_speed(timer, 10.0 / character->getPeriod());	//Cambio el periodo segun el objeto en el que estoy
 	al_start_timer(timer);
 	
 	while (!do_exit)
@@ -43,7 +43,7 @@ void walkingAnimation::startAnimation()
 		al_wait_for_event(event_queue, &ev);
 		if (ev.type == ALLEGRO_EVENT_TIMER)
 		{
-			p.setX(p.getX() - character.getFrameSpeed());	//Muevo el objeto en el eje x segun su velocidad
+			p.setX(p.getX() - character->getFrameSpeed());	//Muevo el objeto en el eje x segun su velocidad
 			redraw = true;
 		}
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
@@ -52,11 +52,11 @@ void walkingAnimation::startAnimation()
 		if (redraw)
 		{
 			redraw = false;
-			al_draw_scaled_bitmap(character.getScenario(), 0.0, 0.0, al_get_bitmap_width(character.getScenario()), al_get_bitmap_height(character.getScenario()), 0.0, 0.0, al_get_display_width(display), al_get_display_height(display), NULL);
+			al_draw_scaled_bitmap(character->getScenario(), 0.0, 0.0, al_get_bitmap_width(character->getScenario()), al_get_bitmap_height(character->getScenario()), 0.0, 0.0, al_get_display_width(display), al_get_display_height(display), NULL);
 			printAnimation();
 			al_flip_display();
 
-			if (currentFrame >= character.getCantFrames())
+			if (currentFrame >= character->getCantFrames())
 			{
 				currentFrame = 0;				//Como ya pasaron todos los frames, vuelvo a comenzar,
 				if (explosion || intro)				//a menos que este en la intro o sea una explosion
@@ -74,7 +74,7 @@ void walkingAnimation::startAnimation()
 			do_exit = true;		//Si llego al final del display finalizo la animacion
 
 	}
-
+	
 }
 
 int walkingAnimation::allegro_setup()
@@ -150,9 +150,9 @@ int walkingAnimation::allegro_setup()
 
 void walkingAnimation::printAnimation()
 {
-	al_draw_scaled_bitmap(character.getAniFrames()[currentFrame], 0.0, 0.0,
-		al_get_bitmap_width(character.getAniFrames()[currentFrame]), al_get_bitmap_height(character.getAniFrames()[currentFrame]),
-		p.getX(), p.getY(), size.x, size.y, character.isLookingRight());
+	al_draw_scaled_bitmap(character->getAniFrames()[currentFrame], 0.0, 0.0,
+		al_get_bitmap_width(character->getAniFrames()[currentFrame]), al_get_bitmap_height(character->getAniFrames()[currentFrame]),
+		p.getX(), p.getY(), size.x, size.y, character->isLookingRight());
 		
 }
 
@@ -161,12 +161,12 @@ void walkingAnimation::dispacherId()
 	switch (id)
 	{
 	case CAT:
-		character.animationSetup(A_FRAMES, A_SPEED, A_PERIOD, A_PATH, "Cat Running");
-		character.lookRight();
+		character = new animation(A_FRAMES, A_SPEED, A_PERIOD, A_PATH, "Cat Running");
+		character->lookRight();
 		p.setY(al_get_display_height(display) / 2.5);
 		break;
 	case EXPLOSION1:
-		character.animationSetup(B_FRAMES, B_SPEED, B_PERIOD, B_PATH, "Explosion 1");
+		character = new animation(B_FRAMES, B_SPEED, B_PERIOD, B_PATH, "Explosion 1");
 		p.setX(0.0);
 		p.setY(0.0);
 		size.x = al_get_display_width(display);
@@ -213,7 +213,7 @@ void walkingAnimation::dispacherId()
 		al_stop_samples();
 		al_destroy_sample(sample);
 	//===============================================================================================================================================================
-		character.animationSetup(C_FRAMES, C_SPEED, C_PERIOD, C_PATH, "Explosion 2");
+		character = new animation(C_FRAMES, C_SPEED, C_PERIOD, C_PATH, "Explosion 2");
 		p.setX(0.0);
 		p.setY(0.0);
 		size.x = al_get_display_width(display);
@@ -221,38 +221,38 @@ void walkingAnimation::dispacherId()
 		explosion = true;
 		break;
 	case HOMERDANCE:
-		character.animationSetup(D_FRAMES, D_SPEED, D_PERIOD, D_PATH, "Homer Dance");
-		character.lookRight();
+		character = new animation(D_FRAMES, D_SPEED, D_PERIOD, D_PATH, "Homer Dance");
+		character->lookRight();
 		p.setY(al_get_display_height(display) / 2.5);
 		break;
 	case SUPERMARIO:
-		character.animationSetup(E_FRAMES, E_SPEED, E_PERIOD, E_PATH, "Super Mario");
-		character.lookRight();
+		character = new animation(E_FRAMES, E_SPEED, E_PERIOD, E_PATH, "Super Mario");
+		character->lookRight();
 		p.setY(al_get_display_height(display) / 3);
 		break;
 	case SONIC:
-		character.animationSetup(F_FRAMES, F_SPEED, F_PERIOD, F_PATH, "Sonic");
+		character = new animation(F_FRAMES, F_SPEED, F_PERIOD, F_PATH, "Sonic");
 		p.setY(al_get_display_height(display) / 3);
 		break;
 	case HEMAN:
-		character.animationSetup(G_FRAMES, G_SPEED, G_PERIOD, G_PATH, "He-man");
+		character = new animation(G_FRAMES, G_SPEED, G_PERIOD, G_PATH, "He-man");
 		p.setY(al_get_display_height(display) / 3);
 		break;
 	case HULK:
-		character.animationSetup(H_FRAMES, H_SPEED, H_PERIOD, H_PATH, "Hulk");
-		character.lookRight();
+		character = new animation(H_FRAMES, H_SPEED, H_PERIOD, H_PATH, "Hulk");
+		character->lookRight();
 		p.setY(al_get_display_height(display) / 3);
 		break;
 	case PICACHU:
-		character.animationSetup(I_FRAMES, I_SPEED, I_PERIOD, I_PATH, "Picachu");
+		character = new animation(I_FRAMES, I_SPEED, I_PERIOD, I_PATH, "Picachu");
 		break;
 	case MICHAEL:
-		character.animationSetup(J_FRAMES, J_SPEED, J_PERIOD, J_PATH, "Michael");
+		character = new animation(J_FRAMES, J_SPEED, J_PERIOD, J_PATH, "Michael");
 		break;
 	case INTRO:
-		character.animationSetup(INTRO_FRAMES, INTRO_SPEED, INTRO_PERIOD, INTRO_PATH, "Sega");
-		p.setX(al_get_display_width(display) / 2 - al_get_bitmap_width(character.getAniFrames()[0]) / 2);
-		p.setY(al_get_display_height(display) / 2 - al_get_bitmap_height(character.getAniFrames()[0]));
+		character = new animation(INTRO_FRAMES, INTRO_SPEED, INTRO_PERIOD, INTRO_PATH, "Sega");
+		p.setX(al_get_display_width(display) / 2 - al_get_bitmap_width(character->getAniFrames()[0]) / 2);
+		p.setY(al_get_display_height(display) / 2 - al_get_bitmap_height(character->getAniFrames()[0]));
 		size.x = al_get_display_width(display) / 2;
 		size.y = al_get_display_height(display) / 2;
 		intro = true;
@@ -265,11 +265,10 @@ walkingAnimation::~walkingAnimation()
 	al_destroy_display(display);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
-
-	al_uninstall_system();		//No se porque se cuelga el programa
+	
+	al_uninstall_system();		
 	al_shutdown_image_addon();
-	al_uninstall_audio();			//No se porque se cuelga el programa
+	al_uninstall_audio();			
 	al_shutdown_primitives_addon();
 		
-	
 }

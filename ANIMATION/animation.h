@@ -14,7 +14,7 @@ public:
 	//Setea y crea a la animacion
 	//Recibe la cantidad de frames, la velocidad de la caminata, el perdiodo de los frames,
 	//un string de la direccion de los bitmaps(con %d en el numero de frame), y un string con el nombre de la carpeta que contiene el background y musica
-	void animationSetup(unsigned int _cantFrames, float _frameSpeed, float _period, char path[], char id[]);
+	animation(unsigned int _cantFrames, float _frameSpeed, float _period, char path[], char id[]);
 	~animation();
 	//Devuelve true si esta mirando a la derecha
 	bool isLookingRight();

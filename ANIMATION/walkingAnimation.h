@@ -107,7 +107,7 @@ private:
 	Position p;
 	Dimensions size;
 
-	animation character;
+	animation *character;
 	uint id;
 	
 	uint currentFrame;

@@ -32,10 +32,12 @@ int main()
 	}
 	
 
-	walkingAnimation intro('k');
-	intro.startAnimation();
-	walkingAnimation character(c);
-	character.startAnimation();
+	walkingAnimation* intro = new walkingAnimation('k');
+	intro->startAnimation();
+	delete intro;
+	walkingAnimation* character= new walkingAnimation(c);
+	character->startAnimation();
+	delete character;
 
 	return 0;
 }

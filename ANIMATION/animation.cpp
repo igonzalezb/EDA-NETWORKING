@@ -4,7 +4,7 @@
 animation::animation()
 {}
 
-void animation::animationSetup(unsigned int _cantFrames, float _frameSpeed, float _period, char path[], char id[])
+animation::animation(unsigned int _cantFrames, float _frameSpeed, float _period, char path[], char id[])
 {
 	unsigned int j = 0;
 	char aPath[100];		//Arreglo auxiliar para strings de paths ya completos
@@ -13,9 +13,9 @@ void animation::animationSetup(unsigned int _cantFrames, float _frameSpeed, floa
 	period = _period;
 
 	aniFrames = new ALLEGRO_BITMAP*[cantFrames];		//Arreglo dinamico de bitmaps, para los frames
-	
-								
-	//Cargo el fondo segun el objeto en que estoy
+
+
+								//Cargo el fondo segun el objeto en que estoy
 	sprintf(aPath, "resources/%s/Scenario.png", id);	//todos las animaciones deben tener un scenario.png con ese formato y en ese path
 	Scenario = al_load_bitmap(aPath);
 	if (!Scenario) {
@@ -30,7 +30,7 @@ void animation::animationSetup(unsigned int _cantFrames, float _frameSpeed, floa
 		fprintf(stderr, "failed to create sample!\n");
 	}
 
-	
+
 	for (unsigned int i = 0; i <= cantFrames; i++)
 	{
 
@@ -44,9 +44,7 @@ void animation::animationSetup(unsigned int _cantFrames, float _frameSpeed, floa
 	}
 
 	al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);		//comienzo a reproducir la musica
-
 }
-
 
 unsigned int animation::getCantFrames()
 {
@@ -94,5 +92,5 @@ animation::~animation()
 	al_stop_samples();
 	al_destroy_sample(sample);
 
-	delete aniFrames[];		//Elimino el arreglo dinamico de bitmaps
+	delete [] aniFrames;		//Elimino el arreglo dinamico de bitmaps
 }
