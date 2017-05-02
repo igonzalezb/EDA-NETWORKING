@@ -91,10 +91,17 @@ void asioTcpClient()
 	}
 
 	
-	for (unsigned int i = SECUENCIA; i < SECUENCIA + countMax; i++)
+	for (unsigned int i = SECUENCIA; i < SECUENCIA + (countMax-1); i++)
 	{
-		//unsigned int computerNumber = conquering.youGo[i]-'0'; //ver este casteo y declarar youGo.
-		
+		unsigned int computerNumber = conquering.youGo[i] - '0';
+		printf("computer number: %d", computerNumber);
+
+		if (computerNumber == 0)
+		{
+			walkingAnimation *character = new walkingAnimation(youGo[0]); //MANDARLE EL ELEMENTO 0 DE buf. buf ACA ES LO MISMO QUE youGo. tiene la letra de la animacion
+			character->startAnimation();
+			delete character;
+		}
 		//ip[computerNumber][20];
 		//conquering.startConnection("localhost");
 		//conquering.startConnection(&ip[computerNumber][0]); //ver si se pone host. Hay que pasarle el IP. ver si pasar como puntero o que
@@ -188,7 +195,7 @@ int cuantas_pc_tengo(void)
 
 void userYouGo(char *animacion_y_orden_de_maquina) //de prueba "k03412"
 {
-	animacion_y_orden_de_maquina[0] = 'k';
+	animacion_y_orden_de_maquina[0] = 'i';
 	animacion_y_orden_de_maquina[1] = 0x0;
 	animacion_y_orden_de_maquina[2] = '1';
 		animacion_y_orden_de_maquina[3] = '4';
@@ -210,23 +217,23 @@ void userYouGo(char *animacion_y_orden_de_maquina) //de prueba "k03412"
 //	//color_set(2, NULL);
 //
 //
-//	char mis_animaciones[11] = { 'a','b','c','d','e','f','g','h','i','j','k' };//SON LAS ANIMACIONES ORDENADAS QUE HACEN REFERENCIA A LO QUE VAN A MOSTRAR
+//	char mis_animaciones[10] = { 'a','b','c','d','e','f','g','h','i','j'};//SON LAS ANIMACIONES ORDENADAS QUE HACEN REFERENCIA A LO QUE VAN A MOSTRAR
 //	unsigned char character = 0;
 //
 //
-//	printf("Pulse las letras de la A a la K en el orden que quiere las animaciones\n");
+//	printf("Pulse las letras de la A a la J en el orden que quiere las animaciones\n");
 //
 //	//while (character == 0) {
 //	unsigned int i=0; //prueba
 //	while (i<1){ //prueba
 //
 //		character = getch();			//toma la letra del teclado para asignarla
-//		if (((character < 'a') && (character > 'k')) || ((character < 'A') && (character > 'K'))) { //esto no esta ANDANDO!!!!!!!
+//		if (((character < 'a') && (character > 'j')) || ((character < 'A') && (character > 'J'))) { //esto no esta ANDANDO!!!!!!!
 //			printf("Caracter invalido\n Try Again\n");
 //			continue;
 //		}
 //
-//		for (int w = 0; w != 11; w++) { //hacer un define del 11
+//		for (int w = 0; w != 10; w++) { //hacer un define del 10
 //			if (character == mis_animaciones[w]) {
 //				animacion_y_orden_de_maquina[0] = character; 
 //				printf("Animacion %c seleccionada\n", mis_animaciones[w]);

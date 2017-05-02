@@ -53,8 +53,9 @@ void server::receiveMessage()
 
 	if (error != boost::asio::error::eof)
 	{
-		//		walkingAnimation character(buf[0]); //MANDARLE EL ELEMENTO 0 DE buf. buf ACA ES LO MISMO QUE youGo. tiene la letra de la animacion
-		//		character.startAnimation();
+		walkingAnimation *character = new walkingAnimation(buf[0]); //MANDARLE EL ELEMENTO 0 DE buf. buf ACA ES LO MISMO QUE youGo. tiene la letra de la animacion
+		character->startAnimation();
+		delete character;
 
 		buf[COUNT]++; // incremento contador. 
 

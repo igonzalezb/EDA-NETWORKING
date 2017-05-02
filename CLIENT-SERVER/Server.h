@@ -8,7 +8,7 @@
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include "Connection.h"
-
+#include "walkingAnimation.h"
 
 //#include <Windows.h>
 
