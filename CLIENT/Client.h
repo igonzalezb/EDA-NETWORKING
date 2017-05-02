@@ -19,7 +19,6 @@ public:
 	void sendMessage();
 	void writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes);
 	char youGo[257];
-	//void userYouGo(char *animacion_y_orden_de_maquina);
 
 private:
 	boost::asio::io_service* IO_handler;

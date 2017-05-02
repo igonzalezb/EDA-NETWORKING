@@ -12,10 +12,11 @@ enum mode { CLIENT, SERVER };
 
 int main(int argc, char* argv[])
 {
+	walkingAnimation *intro = new walkingAnimation('k');
+	intro->startAnimation();
+	delete intro;
+
 	bool mode = callback(argc, argv);
-
-	//int cuantas_pc = cuantas_pc_tengo();
-
 
 	switch (mode)
 	{
@@ -24,9 +25,6 @@ int main(int argc, char* argv[])
 		break;
 	case CLIENT:
 		asioTcpClient();
-		Sleep(10000);
-		printf("saliooooo\n");
-		getchar();
 		break;
 	}
 	return 0;
@@ -51,65 +49,57 @@ void asioTcpClient()
 
 	char ip[255][20];
 
-	/*
 	for (int k = 0; k != 255; k++)
 	{
 		tomo_ips(ip[k], k);
 		if (ip[k + 1][0] == '\n')
 			break;
 	}
-	*/
-
-	//funcion userYouGo. Que agarre el valor nuevo de youGo que ponga el usuario. 
-
+	
 	char youGo[257]; //HACERLE DEFINE
 	for (unsigned int i = 0; i < 257; i++)//HACERLE DEFINE al 257
 	{
 		youGo[i] = '\n';
 	}
-
-	//youGo = (char*)new char[cuantas_pc_tengo+2];  //Ver esto
-
-	//userYouGo(&youGo[0]);
-
+	
 	userYouGo(youGo);
 
-	printf("%c %c %c %c %c %c %c %c \n", youGo[0], youGo[1], youGo[2], youGo[3], youGo[4], youGo[5], youGo[6], youGo[7]); //prueba
 
-
-	//Averiguar countMax (por ahora tener count en cero)
-	unsigned int countMax = setCountMax(youGo); //ver
-
-
-								//le va mandando el youGo a los servidores segun el orden de la secuencia
-	printf("%u\n", countMax);
+	unsigned int countMax = setCountMax(youGo); 
 
 	for (unsigned int i = 0; youGo[i] != '\n'; i++)
 	{
 		conquering.youGo[i] = youGo[i];
-		printf("paso por aca %d\n",i); //prueba
 	}
 
-	
+
 	for (unsigned int i = SECUENCIA; i < SECUENCIA + (countMax-1); i++)
 	{
-		unsigned int computerNumber = conquering.youGo[i] - '0';
-		printf("computer number: %d", computerNumber);
+		unsigned int computerNumber = conquering.youGo[i];
+		printf("computer number: %d\n", computerNumber);
 
-		if (computerNumber == 0)
+		if (computerNumber == 0x0)
 		{
-			walkingAnimation *character = new walkingAnimation(youGo[0]); //MANDARLE EL ELEMENTO 0 DE buf. buf ACA ES LO MISMO QUE youGo. tiene la letra de la animacion
+			walkingAnimation *character = new walkingAnimation(youGo[0]);
 			character->startAnimation();
 			delete character;
+
+			if (i == (SECUENCIA + (countMax - 2)))
+			{
+				userYouGo(youGo);
+			}
+
 		}
-		//ip[computerNumber][20];
-		//conquering.startConnection("localhost");
-		//conquering.startConnection(&ip[computerNumber][0]); //ver si se pone host. Hay que pasarle el IP. ver si pasar como puntero o que
 		
-		printf("paso por aca !!!!!!!\n"); //prueba
-		conquering.startConnection("localhost"); //DESPUES PONER LA LINEA DE ARRIBA. ESTA ES DE PRUEBA
+		conquering.startConnection(&ip[computerNumber][0]); //ver si se pone host. Hay que pasarle el IP. ver si pasar como puntero o que
 		conquering.sendMessage(); //MANDA el youGo con la info
 		conquering.receiveMessage(); //RECIBE el nuevo youGo
+
+		if (i == SECUENCIA + (countMax - 2))
+		{
+			countMax = setCountMax(youGo);
+			i = SECUENCIA;
+		}
 	}
 }
 
@@ -193,105 +183,58 @@ int cuantas_pc_tengo(void)
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-void userYouGo(char *animacion_y_orden_de_maquina) //de prueba "k03412"
+void userYouGo(char *animacion_y_orden_de_maquina)
 {
-	animacion_y_orden_de_maquina[0] = 'i';
-	animacion_y_orden_de_maquina[1] = 0x0;
-	animacion_y_orden_de_maquina[2] = '1';
-		animacion_y_orden_de_maquina[3] = '4';
-		animacion_y_orden_de_maquina[4] = '3';
-		animacion_y_orden_de_maquina[5] = '2';
+	char mis_animaciones[10] = { 'a','b','c','d','e','f','g','h','i','j'};		//SON LAS ANIMACIONES ORDENADAS QUE HACEN REFERENCIA A LO QUE VAN A MOSTRAR
+	
+	printf("Pulse las letras de la A a la J en el orden que quiere las animaciones\n");
+	bool do_exit = false;
+	char letter;
 
-		printf("paso por aca\n"); //prueba
+	while (!do_exit)
+	{
+		letter = getchar();
+		if (((letter >= 'a') && (letter <= 'j')) || ((letter >= 'A') && (letter <= 'J'))) 
+		{
+			animacion_y_orden_de_maquina[ANIMATION] = letter;
+			do_exit = true;
+		}
+		else
+			printf("Caracter invalido\n Try Again\n");
+			
+	}
+
+	animacion_y_orden_de_maquina[COUNT] = 0X0;	//Lo voy a tomar como contador 
+
+	bool seleccion_de_maquinas_incompleta = true;
+	char quit;
+	while (seleccion_de_maquinas_incompleta)
+	{
+		printf("Seleccione el orden que desea que las maquinas se conecten\n");
+		
+		for (unsigned int i = SECUENCIA, caracter_a_numero = 0; i < 257 && seleccion_de_maquinas_incompleta; i++)
+		{
+			animacion_y_orden_de_maquina[COUNT] = 0X1;
+
+			cin >> caracter_a_numero;
+			cout << "Nro de maquina: " << caracter_a_numero << endl;
+			letter = (unsigned char)caracter_a_numero;			//Casteo el numero para ponerlo en binario
+			animacion_y_orden_de_maquina[i] = letter;
+			if (caracter_a_numero > 255)
+			{
+				printf("Caracter No valido, vuele a ingresar el numero\n");
+				i--;
+				continue;
+			}
+			printf("Desea salir? presione s\n");
+			cin >> quit;
+			if (quit == 's')
+				break;
+		}
+
+		seleccion_de_maquinas_incompleta = false;
+	}
 }
-
-//
-//void userYouGo(char *animacion_y_orden_de_maquina)
-//{
-//	//WINDOW * winTest = NULL;     //Puntero en dónde se guarda la terminal (Window) en donde voy a trabajar.
-//	//winTest = initscr();
-//	//immedok(winTest, TRUE);
-//	//noecho();
-//	//start_color();
-//	//init_pair(2, COLOR_BLACK, COLOR_YELLOW);
-//	//color_set(2, NULL);
-//
-//
-//	char mis_animaciones[10] = { 'a','b','c','d','e','f','g','h','i','j'};//SON LAS ANIMACIONES ORDENADAS QUE HACEN REFERENCIA A LO QUE VAN A MOSTRAR
-//	unsigned char character = 0;
-//
-//
-//	printf("Pulse las letras de la A a la J en el orden que quiere las animaciones\n");
-//
-//	//while (character == 0) {
-//	unsigned int i=0; //prueba
-//	while (i<1){ //prueba
-//
-//		character = getch();			//toma la letra del teclado para asignarla
-//		if (((character < 'a') && (character > 'j')) || ((character < 'A') && (character > 'J'))) { //esto no esta ANDANDO!!!!!!!
-//			printf("Caracter invalido\n Try Again\n");
-//			continue;
-//		}
-//
-//		for (int w = 0; w != 10; w++) { //hacer un define del 10
-//			if (character == mis_animaciones[w]) {
-//				animacion_y_orden_de_maquina[0] = character; 
-//				printf("Animacion %c seleccionada\n", mis_animaciones[w]);
-//				character = 0;//ES TURBIOOOOOOOOO
-//				break;
-//			}
-//		}
-//		if (character != 0) {
-//			printf("Error animacion no existente\n");
-//			character = 0; //ES TURBIOOOOOOOOO
-//			continue;
-//		}
-//		else
-//			break;
-//
-//		i++; //prueba
-//	}
-//
-//	animacion_y_orden_de_maquina[1] = 0X0;	//Lo voy a tomar como contador 
-//
-//
-//	character = 0;		//Reutilizo mi character para castear el numero a binario y ponerlo en el string
-//	bool seleccion_de_maquinas_incompleta = true;
-//
-//	//while (seleccion_de_maquinas_incompleta) {  //meter comparacion con cantidad
-//	//unsigned int i=0;//DESPUES BORRAR
-//	while (i < 6){ //DESPUES BORRAR
-//		int caracter_a_numero = 0;
-//		printf("Seleccione el orden que desea que las maquinas se conecten separados por un espacio\n");
-//		int j = 2;
-//		//
-//		//EL 7 ES UN NUMERO ARBITRARIO QUE YO FIJE COMO MAXIMO DE PC -> TIENE QUE IR EL DE CUANTAS PC TENGO
-//		//
-//		unsigned int countMax = setCountMax(animacion_y_orden_de_maquina);
-//
-//		for (; character == 0 && j != (countMax+2); j++) {			//El maximo de j lo define la cantidad de maquinas que hay +2
-//
-//			cin >> caracter_a_numero;
-//
-//			cout << "Nro de maquina: " << caracter_a_numero << endl;
-//			character = (unsigned char)caracter_a_numero;			//Casteo el numero para ponerlo en binario
-//
-//			animacion_y_orden_de_maquina[j] = character;
-//			character = 0;
-//		}
-//		//clear();
-//		printf("El orden seleccionado es el siguiente:\n");
-//		for (unsigned int c = 0; c != j-2; c++) {
-//			printf("%d\n", (unsigned char)animacion_y_orden_de_maquina[c + 2]);
-//		}
-//
-//		printf("Confirmar? <S> Sino presione otra tecla para volver a iniciar la secuencia\n\n");
-//		if (char c = getch() == 's')
-//			seleccion_de_maquinas_incompleta = false;
-//		i++; //DESPUES BORRAR
-//	}
-//	//clear();
-//}
 
 
 
@@ -300,11 +243,8 @@ void userYouGo(char *animacion_y_orden_de_maquina) //de prueba "k03412"
 unsigned int setCountMax(char*youGo) 
 {
 	unsigned int countMax = 0;
-	printf("hola\n");
-
-	for (int contador = 2; contador < 255; contador++) {
-		printf("holaaaa\n");
-		if (*(youGo + contador) != EOF && *(youGo + contador) != '\0' && *(youGo + contador) != '\n')
+	for (int contador = SECUENCIA; contador < 255; contador++) {
+		if (*(youGo + contador) != EOF && *(youGo + contador) != '\n')
 			countMax++;
 		else
 		{
@@ -312,6 +252,5 @@ unsigned int setCountMax(char*youGo)
 			//return -1;		//-1 es el error no le pongo define para que no salte error
 		}
 	}
-	printf("chau\n");
 	return countMax;
 }

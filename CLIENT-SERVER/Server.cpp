@@ -69,6 +69,7 @@ void server::receiveMessage()
 			userYouGo(buf); // va a esperar a que  se ingrese todo por teclado. Ya hace como un setter, tiene acceso a youGo.
 							//GUARDAR BUF EN youGo
 		}
+
 	}
 	else
 		std::cout << "Error while trying to connect to server %d" << error.message() << std::endl;
