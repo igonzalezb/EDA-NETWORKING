@@ -12,6 +12,10 @@ enum mode { CLIENT, SERVER };
 
 int main(int argc, char* argv[])
 {
+	//walkingAnimation *intro = new walkingAnimation('k');
+	//intro->startAnimation();
+	//delete intro;
+
 	bool mode = callback(argc, argv);
 
 	switch (mode)
@@ -52,50 +56,53 @@ void asioTcpClient()
 			break;
 	}
 	
-	char youGo[257]; //HACERLE DEFINE
-	for (unsigned int i = 0; i < 257; i++)//HACERLE DEFINE al 257
+	for (unsigned int i = 0; i < 257; i++)
 	{
-		youGo[i] = '\n';
+		conquering.youGo[i] = '\n';
 	}
 	
-	userYouGo(youGo);
+	userYouGo(conquering.youGo);
 
 
-	unsigned int countMax = setCountMax(youGo); 
-
-	for (unsigned int i = 0; youGo[i] != '\n'; i++)
-	{
-		conquering.youGo[i] = youGo[i];
-	}
+	unsigned int countMax = setCountMax(conquering.youGo);
 
 
-	for (unsigned int i = SECUENCIA; i < SECUENCIA + (countMax-1); i++)
+	for (unsigned int i = SECUENCIA; i < (SECUENCIA + countMax); )
 	{
 		unsigned int computerNumber = conquering.youGo[i];
 		printf("computer number: %d\n", computerNumber);
 
 		if (computerNumber == 0x0)
 		{
-			walkingAnimation *character = new walkingAnimation(youGo[0]);
+			walkingAnimation *character = new walkingAnimation(conquering.youGo[0]);
 			character->startAnimation();
 			delete character;
+			++conquering.youGo[COUNT];
 
-			if (i == (SECUENCIA + (countMax - 2)))
+			if (i == (SECUENCIA + (countMax-1)))
 			{
-				userYouGo(youGo);
+				for (unsigned int i = 0; i < 257; i++)
+				{
+					conquering.youGo[i] = '\n';
+				}
+				userYouGo(conquering.youGo);
+
+				//PODRIA PREGUNTAR SI QUIERO VOLVER A EMEZAR O NO
+				countMax = setCountMax(conquering.youGo);
+				
 			}
-
 		}
-		
-		conquering.startConnection(&ip[computerNumber][0]); //ver si se pone host. Hay que pasarle el IP. ver si pasar como puntero o que
-		conquering.sendMessage(); //MANDA el youGo con la info
-		conquering.receiveMessage(); //RECIBE el nuevo youGo
 
-		if (i == SECUENCIA + (countMax - 2))
+		else 
 		{
-			countMax = setCountMax(youGo);
-			i = SECUENCIA;
+			conquering.startConnection(&ip[computerNumber][0]); //ver si se pone host. Hay que pasarle el IP. ver si pasar como puntero o que
+			conquering.sendMessage(); //MANDA el youGo con la info
+			conquering.receiveMessage(); //RECIBE el nuevo youGo
 		}
+		if (i == (SECUENCIA + (countMax - 1)))
+			i = SECUENCIA;
+		else
+			i++;
 	}
 }
 
@@ -114,7 +121,7 @@ bool callback(char argc, char**argv)
 	return SERVER;
 }
 
-/////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -189,14 +196,14 @@ void userYouGo(char *animacion_y_orden_de_maquina)
 
 	while (!do_exit)
 	{
-		letter = getchar();
-		if (((letter >= 'a') && (letter <= 'j')) || ((letter >= 'A') && (letter <= 'J'))) 
+		cin >> letter;
+		if (((letter >= 'a') && (letter <= 'j')) || ((letter >= 'A') && (letter <= 'J')))
 		{
 			animacion_y_orden_de_maquina[ANIMATION] = letter;
 			do_exit = true;
 		}
 		else
-			printf("Caracter invalido\n Try Again\n");
+			printf("Caracter invalido - Try Again\n");
 			
 	}
 
@@ -208,23 +215,21 @@ void userYouGo(char *animacion_y_orden_de_maquina)
 	{
 		printf("Seleccione el orden que desea que las maquinas se conecten\n");
 		
-		for (unsigned int i = SECUENCIA, caracter_a_numero = 0; i < 257 && seleccion_de_maquinas_incompleta; i++)
+		for (unsigned int i = SECUENCIA, caracter_a_numero = 0; i < 257; i++)
 		{
-			animacion_y_orden_de_maquina[COUNT] = 0X1;
-
 			cin >> caracter_a_numero;
 			cout << "Nro de maquina: " << caracter_a_numero << endl;
 			letter = (unsigned char)caracter_a_numero;			//Casteo el numero para ponerlo en binario
 			animacion_y_orden_de_maquina[i] = letter;
-			if (caracter_a_numero > 255)
+			if (caracter_a_numero > 255 || caracter_a_numero < 0)
 			{
 				printf("Caracter No valido, vuele a ingresar el numero\n");
 				i--;
 				continue;
 			}
-			printf("Desea salir? presione s\n");
+			printf("Desea salir? <y/n>\n");
 			cin >> quit;
-			if (quit == 's')
+			if (quit == 'y')
 				break;
 		}
 
@@ -240,7 +245,7 @@ unsigned int setCountMax(char*youGo)
 {
 	unsigned int countMax = 0;
 	for (int contador = SECUENCIA; contador < 255; contador++) {
-		if (*(youGo + contador) != EOF && *(youGo + contador) != '\n')
+		if (youGo[contador] != '\n')
 			countMax++;
 		else
 		{

@@ -37,6 +37,10 @@ void server::receiveMessage()
 {
 	boost::system::error_code error;
 	char buf[512];
+	for (unsigned int i = 0; i < 512; i++)
+	{
+		buf[i] = '\n';
+	}
 	size_t len = 0;
 	std::cout << "Receiving Message" << std::endl;
 	do
@@ -60,8 +64,8 @@ void server::receiveMessage()
 		buf[COUNT]++; // incremento contador. 
 
 					  //////ACA AVERIGUAR EL VALOR DE countMax)  VER COMO HACERLO
-		std::string str(buf); //bien?
-		unsigned int countMax = str.length() - 2;
+		
+		unsigned int countMax = setCountMax(buf);
 		////////////
 
 		if (buf[COUNT] >= countMax)

@@ -71,7 +71,6 @@ void client::receiveMessage() {
 		for (unsigned int i = 0; buf[i] != '\n'; i++)
 		{
 			youGo[i] = buf[i];
-			printf("paso por aca %d\n", i); //prueba
 		}
 
 		unsigned int countMax = setCountMax(youGo);
